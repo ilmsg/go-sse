@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+<body>
+    Mem: <span id="mem"></span><br />
+    CPU: <span id="cpu"></span>
+</body>
+
+<script type="text/javascript">
+    const evtSource = new EventSource("http://127.0.0.1:3010/events");
+
+    const mem = document.getElementById("mem");
+    const cpu = document.getElementById("cpu");
+
+    evtSource.addEventListener("open", (e) => {
+        console.log("The connection has been established.");
+    });
+
+    evtSource.onopen = (e) => {
+        console.log("The connection has been established.");
+    };
+
+    evtSource.addEventListener("mem", (event) => {
+        mem.textContent = event.data;
+        console.log(event.data)
+    });
+
+    evtSource.addEventListener("cpu", (event) => {
+        cpu.textContent = event.data;
+        console.log(event.data)
+    });
+
+    evtSource.onerror = (err) => {
+        console.log("sse error", err);
+    };
+</script>
+
+</html>
